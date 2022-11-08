@@ -6,10 +6,10 @@ OPTIONS (
     labels = [("env", "dev"), ("label2", "value2")]
 );
 
-//on the CLI:
+// on the CLI:
 bq mk --external_table_definition=definition.json --project_id=company-warehouse-dev stp.warehouse_bq
 
-//definition.json:
+// definition.json:
 {
     "sourceFormat": "BIGTABLE",
     "sourceUris": [
