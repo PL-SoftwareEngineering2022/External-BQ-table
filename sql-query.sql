@@ -6,30 +6,36 @@ OPTIONS (
     labels = [("env", "dev"), ("label2", "value2")]
 );
 
+//on the CLI:
+bq mk --external_table_definition=definition.json --project_id=company-warehouse-dev stp.warehouse_bq
 
-CREATE EXTERNAL TABLE `company-warehouse-dev.stp`.warehouse_bq
-OPTIONS (
-    format = "CLOUD_BIGTABLE",
-    uris = ['https://googleapis.com/bigtable/projects/company-project-dev/instances/personstore/tables/personidlookup'],
-    bigtable_options = 
-    """
-    {
-        bigtableColumnFamilies : [
+//definition.json:
+{
+    "sourceFormat": "BIGTABLE",
+    "sourceUris": [
+        "https://googleapis.com/bigtable/projects/company-platform-dev/instances/personstore/tables/personidlookup"
+    ],
+    "autodetect": false,
+    "bigtableOptions": {
+        "columnFamilies" : [
             {
-                "familyId" : "familyName1",
-                "type" : "STRING"
+                "familyId": "crm",
+                "type" : "STRING" 
             },
             {
-                "familyId" : "familyName2",
-                "type" : "STRING"
+                "familyId": "spid",
+                "type" : "STRING" 
             },
             {
-                "familyId" : "familyName3",
-                "type" : "STRING"
+                "familyId": "pro",
+                "type" : "STRING" 
+            },
+            {
+                "familyId": "src",
+                "type" : "STRING" 
             }
         ],
         "readRowkeyAsString" : true,
-        "ignoreUnspecifiedColumnFamilies" : true
+        "ignoreUnspecifiedColumnFamilies": true
     }
-    """
-);
+}
